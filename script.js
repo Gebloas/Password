@@ -145,6 +145,18 @@ function getPinFeedback(enteredPin) {
 function handleSuccessfulUnlock() {
     playSound('success');
 
+    // 👇 GOOGLE ANALYTICS TAKİBİ İÇİN EKLENEN KOD 👇
+    // gtag fonksiyonu tanımlıysa (index.html'de yüklüyse) olayı gönderir
+    if (typeof gtag === 'function') {
+        gtag('event', 'pin_cozme_basarisi', {
+            'event_category': 'Oyun',
+            'event_label': 'Basarili_Giris',
+            // Şifrenin kaçıncı denemede çözüldüğünü (toplam deneme - kalan deneme) kaydeder
+            'value': (MAX_ATTEMPTS - attemptsRemaining) 
+        });
+    }
+    // 👆 KOD BURADA BİTİYOR 👆
+
     // Başarı mesajı ve yeni CSS tipi eklendi
     addLogEntry({
         message: 'ŞİFREYİ ÇÖZDÜN HELAL LAN', 
